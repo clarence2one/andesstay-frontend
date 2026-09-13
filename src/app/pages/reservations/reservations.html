@@ -1,1 +1,41 @@
-<p>reservations works!</p>
+<section class="reservations">
+  <div class="res-head">
+    <h2 class="res-title">📋 Mis Reservas</h2>
+    <p class="res-sub">Tus reservas se guardan de forma segura junto a tu sesión.</p>
+  </div>
+
+  @if (reservations.length === 0) {
+    <div class="empty">
+      <div class="empty-icon">🗓️</div>
+      <p><strong>No tienes reservas todavía.</strong></p>
+      <p class="empty-sub">Explora el catálogo y reserva tu cabaña ideal en la Patagonia.</p>
+      <a class="btn btn-primary" routerLink="/catalog">🏞️ Ir al catálogo</a>
+    </div>
+  } @else {
+    <div class="res-grid">
+      @for (item of reservations; track item.id) {
+        <article class="res-card">
+          <div class="res-img">
+            <img [src]="item.imageUrl" [alt]="item.title" />
+            <span class="res-badge">{{ item.folio }}</span>
+          </div>
+          <div class="res-body">
+            <h3 class="res-title-card">{{ item.title }}</h3>
+            <p class="res-loc">📍 {{ item.location }}</p>
+            <div class="res-detail">
+              <span>🛏️ {{ item.nights }} noche(s)</span>
+              <span>👤 {{ item.guestName }}</span>
+            </div>
+            <div class="res-foot">
+              <span class="res-total">{{ formatCLP(item.total) }}</span>
+              <div class="res-actions">
+                <a class="btn btn-ghost" [routerLink]="['/booking', item.id]">🧾 Boleta</a>
+                <button class="btn btn-danger btn-sm" (click)="remove(item.id)">🗑️</button>
+              </div>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

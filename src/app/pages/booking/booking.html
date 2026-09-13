@@ -1,0 +1,86 @@
+<section class="booking-page">
+  @if (reservation) {
+    <div class="boleta" id="boleta">
+      <div class="boleta-head">
+        <div class="boleta-brand">
+          <span class="boleta-logo">🏔️</span>
+          <div>
+            <div class="boleta-name">Andes<span class="brand-accent">Stay</span> SpA</div>
+            <div class="boleta-sub">Hospedajes en la Patagonia</div>
+          </div>
+        </div>
+        <div class="boleta-type">
+          <span class="boleta-tag">Boleta Electrónica de Reserva</span>
+          <span class="boleta-folio">FOLIO: {{ reservation.folio }}</span>
+        </div>
+      </div>
+
+      <div class="boleta-meta">
+        <div class="meta-block">
+          <span class="meta-key">Emisor</span>
+          <span>AndesStay SpA · RUT 77.777.777-7</span>
+          <span>Av. Los Andes 1088, Puerto Varas, CHILE</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-key">Fecha de emisión</span>
+          <span>{{ formatDate(reservation.createdAt) }}</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-key">Huésped</span>
+          <span>{{ reservation.guestName }}</span>
+        </div>
+      </div>
+
+      <table class="boleta-table">
+        <thead>
+          <tr>
+            <th>Alojamiento</th>
+            <th>Noches</th>
+            <th>Precio / noche</th>
+            <th class="align-right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="detail-cell">
+                <img [src]="reservation.imageUrl" [alt]="reservation.title" class="detail-img" />
+                <div>
+                  <div class="detail-title">{{ reservation.title }}</div>
+                  <div class="detail-loc">📍 {{ reservation.location }}</div>
+                </div>
+              </div>
+            </td>
+            <td>{{ reservation.nights }}</td>
+            <td>{{ formatCLP(reservation.pricePerNight) }}</td>
+            <td class="align-right">{{ formatCLP(reservation.subtotal) }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="boleta-totals">
+        <div class="totals-row"><span>Subtotal</span><span>{{ formatCLP(reservation.subtotal) }}</span></div>
+        <div class="totals-row"><span>IVA (19%)</span><span>{{ formatCLP(reservation.iva) }}</span></div>
+        <div class="totals-row totals-final"><span>Total a pagar</span><span>{{ formatCLP(reservation.total) }}</span></div>
+      </div>
+
+      <p class="boleta-note">
+        Reserva protegida con sesión de Microsoft Entra ID (OIDC + PKCE).
+        Los datos del catálogo se obtienen desde AWS API Gateway con token JWT validado.
+      </p>
+    </div>
+
+    <div class="booking-actions no-print">
+      <button class="btn btn-ghost" (click)="print()">🖨️ Imprimir boleta</button>
+      <a class="btn btn-primary" routerLink="/reservations">📋 Mis reservas</a>
+      <a class="btn btn-primary" routerLink="/catalog">🏞️ Volver al catálogo</a>
+    </div>
+  } @else {
+    <div class="state error">
+      ⚠️ La reserva que buscas no existe. Vuelve al catálogo y haz una nueva reserva.
+    </div>
+    <div class="booking-actions">
+      <a class="btn btn-primary" routerLink="/catalog">🏞️ Ir al catálogo</a>
+    </div>
+  }
+</section>

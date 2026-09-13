@@ -4,6 +4,7 @@ import { Login } from './pages/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { Reservations } from './pages/reservations/reservations';
 import { Catalog } from './pages/catalog/catalog';
+import { Booking } from './pages/booking/booking';
 import { Reports } from './pages/reports/reports';
 import { Audit } from './pages/audit/audit';
 
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'dashboard', component: Dashboard, canActivate: [MsalGuard] },
   { path: 'reservations', component: Reservations, canActivate: [MsalGuard] },
   { path: 'catalog', component: Catalog, canActivate: [MsalGuard] },
+  { path: 'booking/:id', component: Booking, canActivate: [MsalGuard] },
   { path: 'reports', component: Reports, canActivate: [MsalGuard] },
   { path: 'audit', component: Audit, canActivate: [MsalGuard] },
 

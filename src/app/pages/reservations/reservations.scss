@@ -1,0 +1,76 @@
+.res-head { text-align: center; margin-bottom: 2rem; }
+.res-title { margin: 0 0 0.4rem; font-size: 2rem; font-weight: 800; color: #ffffff; }
+.res-sub { margin: 0; color: var(--as-mist); font-size: 0.9rem; }
+
+.empty {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  border-radius: var(--as-radius);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: #e2e8f0;
+}
+.empty-icon { font-size: 3rem; }
+.empty p { margin: 0.4rem 0; }
+.empty-sub { font-size: 0.85rem; color: var(--as-mist); margin-bottom: 1.2rem !important; }
+
+.res-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+.res-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.res-card:hover { transform: translateY(-5px); box-shadow: 0 20px 42px rgba(0, 0, 0, 0.35); border-color: rgba(20, 184, 166, 0.5); }
+
+.res-img { position: relative; height: 170px; overflow: hidden; }
+.res-img img { width: 100%; height: 100%; object-fit: cover; }
+.res-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(11, 31, 58, 0.85);
+  color: #a5f3fc;
+  font-family: 'Consolas', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 16px;
+}
+
+.res-body { padding: 1.1rem 1.2rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+.res-title-card { margin: 0; font-size: 1.1rem; font-weight: 700; color: #ffffff; }
+.res-loc { margin: 0; font-size: 0.82rem; color: var(--as-mist); }
+.res-detail {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+}
+.res-foot {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+.res-total { font-size: 1.05rem; font-weight: 800; color: var(--as-amber); }
+.res-actions { display: flex; align-items: center; gap: 0.4rem; }
+.btn-sm { padding: 0.4rem 0.7rem; border-radius: 9px; }

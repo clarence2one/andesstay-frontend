@@ -1,0 +1,102 @@
+.login-shell {
+  position: relative;
+  min-height: calc(100vh - 7rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+/* Orbes decorativos */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.orb-a { width: 320px; height: 320px; background: #0e7490; top: -60px; right: -60px; }
+.orb-b { width: 260px; height: 260px; background: #f59e0b; bottom: 40px; left: -70px; opacity: 0.28; }
+
+.star {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1rem;
+  pointer-events: none;
+  animation: twinkle 3s ease-in-out infinite;
+}
+.star-1 { top: 12%; left: 14%; }
+.star-2 { top: 22%; right: 18%; animation-delay: 1s; }
+.star-3 { top: 8%; right: 40%; animation-delay: 1.6s; }
+@keyframes twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* Tarjeta glass */
+.login-card {
+  position: relative;
+  z-index: 2;
+  max-width: 470px;
+  width: 92%;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: var(--as-shadow);
+  overflow: hidden;
+}
+.card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(400px 200px at 50% -10%, rgba(20, 184, 166, 0.28), transparent);
+  pointer-events: none;
+}
+.card-body { position: relative; padding: 2.4rem 2.2rem; }
+
+.logo { font-size: 3.4rem; line-height: 1; margin-bottom: 0.4rem; }
+.title {
+  margin: 0;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.title-accent { color: var(--as-amber); }
+.tagline { color: var(--as-mist); margin: 0.3rem 0 1.6rem; font-size: 0.95rem; }
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin-bottom: 1.6rem;
+}
+.feature {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  transition: all 0.2s ease;
+}
+.feature:hover { background: rgba(20, 184, 166, 0.15); transform: translateY(-2px); }
+.feature-icon { font-size: 1.35rem; }
+.feature-label { font-size: 0.8rem; font-weight: 600; color: #e2e8f0; }
+
+.login-btn { width: 100%; padding: 0.95rem; font-size: 1.02rem; border-radius: 14px; }
+
+.proto { margin: 1.1rem 0 0; font-size: 0.74rem; color: var(--as-mist); }
+.tenant { margin: 0.25rem 0 0; font-size: 0.68rem; color: #7d8ea6; font-family: 'Consolas', monospace; }
+
+/* Montañas al fondo */
+.mountains {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+  line-height: 0;
+}

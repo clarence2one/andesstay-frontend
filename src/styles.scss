@@ -1,1 +1,77 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   AndesStay · Tema Global Cloud Native
+   ============================================================ */
+:root {
+  --as-night: #0b1f3a;
+  --as-night-2: #12294d;
+  --as-sky: #1e3a5f;
+  --as-teal: #14b8a6;
+  --as-teal-dark: #0f766e;
+  --as-amber: #f59e0b;
+  --as-sun: #fb923c;
+  --as-rose: #f43f5e;
+  --as-mist: #c9d6e8;
+  --as-ink: #0f172a;
+  --as-card: rgba(255, 255, 255, 0.06);
+  --as-line: rgba(255, 255, 255, 0.1);
+  --as-radius: 18px;
+  --as-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  font-family: 'Poppins', 'Segoe UI', Roboto, Arial, sans-serif;
+  color: #f1f5f9;
+  background:
+    radial-gradient(1100px 520px at 85% -10%, rgba(59, 130, 246, 0.30), transparent 60%),
+    radial-gradient(900px 480px at -10% 25%, rgba(20, 184, 166, 0.22), transparent 60%),
+    radial-gradient(700px 400px at 50% 110%, rgba(249, 115, 22, 0.12), transparent 60%),
+    linear-gradient(160deg, #0b1f3a 0%, #12294d 45%, #1e3a5f 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ------- Botones globales ------- */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 12px;
+  padding: 0.55rem 1.1rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #14b8a6 0%, #0e7490 100%);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  box-shadow: 0 10px 24px rgba(20, 184, 166, 0.4);
+  transform: translateY(-1px);
+}
+.btn-danger {
+  background: rgba(244, 63, 94, 0.9);
+  color: #ffffff;
+}
+.btn-danger:hover { filter: brightness(1.1); }
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.18); }
+
+/* ------- Scrollbar ------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0b1f3a; }
+::-webkit-scrollbar-thumb { background: #2c5470; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #3a6d8f; }

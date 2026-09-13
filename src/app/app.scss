@@ -1,0 +1,118 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 2rem;
+  background: rgba(11, 31, 58, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--as-line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.brand:hover { opacity: 0.85; }
+.brand-logo { font-size: 1.45rem; }
+.brand .dot { color: var(--as-amber); }
+
+.nav {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.nav a {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 0.45rem 0.95rem;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+}
+.nav a:hover { background: rgba(255, 255, 255, 0.08); color: #ffffff; }
+.nav a.active {
+  background: linear-gradient(135deg, var(--as-teal), var(--as-teal-dark));
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(20, 184, 166, 0.35);
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.auth-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--as-amber), var(--as-sun));
+  color: #0b1f3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+.auth-meta { display: flex; flex-direction: column; gap: 2px; }
+.user-name { font-size: 0.85rem; font-weight: 600; color: #e2e8f0; }
+.jwt-pill {
+  font-size: 0.66rem;
+  font-family: 'Consolas', 'Courier New', monospace;
+  color: #a5f3fc;
+  background: rgba(8, 145, 178, 0.28);
+  padding: 0.15rem 0.5rem;
+  border-radius: 8px;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  width: 100%;
+}
+
+.site-footer {
+  position: relative;
+  text-align: center;
+  padding: 0 1rem 1.25rem;
+  color: #7d8ea6;
+  font-size: 0.78rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 2rem;
+  overflow: hidden;
+}
+.footer-mountains {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.site-footer p { margin: 0; padding-top: 0.5rem; }

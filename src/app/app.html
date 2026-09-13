@@ -1,37 +1,45 @@
-<header style="background-color: #1e293b; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;">
-  <div style="font-size: 1.25rem; font-weight: bold;">
-    🏔️ AndesStay
-  </div>
+<header class="topbar">
+  <a class="brand" routerLink="/dashboard" title="Ir al inicio">
+    <span class="brand-logo">🏔️</span>
+    <span>Andes<span class="dot">Stay</span></span>
+  </a>
 
-  <nav *ngIf="authService.isAuthenticated$ | async" style="display: flex; gap: 1rem;">
-    <a routerLink="/dashboard" routerLinkActive="active" style="color: white; text-decoration: none;">Dashboard</a>
-    <a routerLink="/reservations" routerLinkActive="active" style="color: white; text-decoration: none;">Reservas</a>
-    <a routerLink="/catalog" routerLinkActive="active" style="color: white; text-decoration: none;">Catálogo</a>
-    <a routerLink="/reports" routerLinkActive="active" style="color: white; text-decoration: none;">Reportes</a>
-    <a routerLink="/audit" routerLinkActive="active" style="color: white; text-decoration: none;">Auditoría</a>
+  <nav *ngIf="authService.isAuthenticated$ | async" class="nav">
+    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+    <a routerLink="/reservations" routerLinkActive="active">Reservas</a>
+    <a routerLink="/catalog" routerLinkActive="active">Catálogo</a>
+    <a routerLink="/reports" routerLinkActive="active">Reportes</a>
+    <a routerLink="/audit" routerLinkActive="active">Auditoría</a>
   </nav>
 
-  <div>
+  <div class="auth">
     <ng-container *ngIf="authService.isAuthenticated$ | async; else loginBtn">
-      <span style="margin-right: 1rem;">👤 {{ authService.getUserName() }}</span>
-      <div *ngIf="tokenSnippet" style="font-size: 0.7rem; color: #a5f3fc; font-family: monospace; margin-bottom: 0.25rem; word-break: break-all; max-width: 380px;">
-        JWT: {{ tokenSnippet }}
+      <div class="auth-inner">
+        <span class="avatar">{{ (authService.getUserName() || 'U').charAt(0).toUpperCase() }}</span>
+        <div class="auth-meta">
+          <span class="user-name">{{ authService.getUserName() }}</span>
+          <span *ngIf="tokenSnippet" class="jwt-pill" title="{{ tokenSnippet }}">JWT: {{ tokenSnippet }}</span>
+        </div>
       </div>
-      <button (click)="copyToken()" style="background-color: #2563eb; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; margin-right: 0.5rem;">
-        📋 Copiar JWT
-      </button>
-      <button (click)="logout()" style="background-color: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
-        Cerrar Sesión
-      </button>
+      <button class="btn btn-ghost" (click)="copyToken()">📋 Copiar JWT</button>
+      <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
     </ng-container>
     <ng-template #loginBtn>
-      <button (click)="login()" style="background-color: #2563eb; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
-        Iniciar Sesión con Entra ID
-      </button>
+      <button class="btn btn-primary" (click)="login()">🔐 Iniciar sesión con Entra ID</button>
     </ng-template>
   </div>
 </header>
 
-<main style="padding: 2rem;">
+<main class="main">
   <router-outlet></router-outlet>
 </main>
+
+<footer class="site-footer">
+  <div class="footer-mountains" aria-hidden="true">
+    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" width="100%" height="90" role="presentation">
+      <path d="M0 90 L180 20 L300 75 L420 10 L560 80 L700 25 L840 85 L980 30 L1120 78 L1260 15 L1440 80 L1440 90 Z" fill="rgba(20,184,166,0.14)"/>
+      <path d="M0 90 L150 55 L300 82 L470 35 L620 88 L780 50 L940 90 L1100 60 L1260 88 L1360 40 L1440 75 L1440 90 Z" fill="rgba(11,31,58,0.55)"/>
+    </svg>
+  </div>
+  <p>AndesStay · Cloud Native FullStack · IDaaS + API Manager + Spring Boot + Angular · DSY1107</p>
+</footer>
