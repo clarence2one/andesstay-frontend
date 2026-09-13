@@ -1,1 +1,44 @@
-<p>catalog works!</p>
+<div style="font-family: 'Segoe UI', Roboto, Arial, sans-serif;">
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <h2 style="color: #1a365d; font-size: 1.8rem; margin: 0 0 0.5rem 0;">🌐 Explorar Alojamientos</h2>
+    <p style="color: #718096; margin: 0; font-size: 0.95rem;">
+      Datos obtenidos vía <strong>{{ displayUrl() }}</strong> con token JWT (interceptor MSAL)
+    </p>
+  </div>
+
+  @if (loading) {
+    <div style="text-align: center; padding: 4rem; font-size: 1.2rem; color: #2d3748; font-weight: 600;">
+      ⏳ Cargando el catálogo de alojamientos...
+    </div>
+  }
+
+  @if (error) {
+    <div style="background: #fed7d7; color: #9b2c2c; padding: 1.2rem; border-radius: 12px; text-align: center; border: 1px solid #feb2b2; font-weight: 600;">
+      ⚠️ <strong>Ups!</strong> {{ error }}
+    </div>
+  }
+
+  @if (!loading && !error) {
+    @for (item of lodgings; track item.id) {
+      <div style="background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.08); display: flex; flex-direction: column; border: 1px solid rgba(226,232,240,0.8); margin-bottom: 1.5rem; max-width: 340px;">
+        <div style="height: 220px; overflow: hidden; position: relative;">
+          <img [src]="item.imageUrl" [alt]="item.title" style="width: 100%; height: 100%; object-fit: cover;" />
+          <span style="position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.92); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; color: #2b6cb0;">⭐ Destacado</span>
+        </div>
+        <div style="padding: 1.5rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <h3 style="font-size: 1.25rem; color: #1a202c; margin: 0 0 0.4rem 0;">{{ item.title }}</h3>
+            <p style="font-size: 0.9rem; color: #718096; margin: 0 0 1rem 0;">📍 {{ item.location }}</p>
+          </div>
+          <div style="border-top: 1px solid #edf2f7; padding-top: 0.9rem; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-size: 1.2rem; font-weight: 800; color: #2b6cb0;">{{ formatCLP(getPrice(item)) }}</span>
+              <span style="font-size: 0.8rem; color: #a0aec0;">/ noche</span>
+            </div>
+            <button style="background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 10px; font-weight: 700; cursor: pointer;">Reservar</button>
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>

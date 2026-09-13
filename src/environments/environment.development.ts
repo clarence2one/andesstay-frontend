@@ -1,12 +1,12 @@
 export const environment = {
   production: false,
   azure: {
-    clientId: 'TU_CLIENT_ID_AQUI',
-    tenantId: 'TU_TENANT_ID_AQUI',
-    authority: 'https://login.microsoftonline.com/TU_TENANT_ID_AQUI',
+    clientId: 'e2d52786-8292-433e-a464-d575268eca38',
+    tenantId: '5fb0afd3-b475-47e9-862b-1ce06143be35',
+    authority: 'https://login.microsoftonline.com/5fb0afd3-b475-47e9-862b-1ce06143be35',
     redirectUri: 'http://localhost:4200',
     postLogoutRedirectUri: 'http://localhost:4200',
-    protectedResourceScopes: ['api://TU_API_CLIENT_ID/access_as_user']
+    protectedResourceScopes: ['api://e2d52786-8292-433e-a464-d575268eca38/read']
   },
-  apiBaseUrl: 'http://localhost:8080/api'
+  apiBaseUrl: 'https://kid5q813hh.execute-api.us-east-1.amazonaws.com/api'
 };

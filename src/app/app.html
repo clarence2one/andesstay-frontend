@@ -14,6 +14,12 @@
   <div>
     <ng-container *ngIf="authService.isAuthenticated$ | async; else loginBtn">
       <span style="margin-right: 1rem;">👤 {{ authService.getUserName() }}</span>
+      <div *ngIf="tokenSnippet" style="font-size: 0.7rem; color: #a5f3fc; font-family: monospace; margin-bottom: 0.25rem; word-break: break-all; max-width: 380px;">
+        JWT: {{ tokenSnippet }}
+      </div>
+      <button (click)="copyToken()" style="background-color: #2563eb; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; margin-right: 0.5rem;">
+        📋 Copiar JWT
+      </button>
       <button (click)="logout()" style="background-color: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
         Cerrar Sesión
       </button>

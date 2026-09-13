@@ -39,7 +39,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: ['user.read']
+      scopes: ['api://e2d52786-8292-433e-a464-d575268eca38/read']
     }
   };
 }

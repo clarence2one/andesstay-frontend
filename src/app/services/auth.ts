@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { MsalService, MsalBroadcastService } from '@azure/msal-angular';
 import { EventMessage, EventType, AuthenticationResult } from '@azure/msal-browser';
-import { BehaviorSubject, Observable, filter } from 'rxjs';
+import { BehaviorSubject, Observable, filter, firstValueFrom } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,19 @@ export class AuthService {
   }
 
   private initAuth(): void {
-    this.msalService.instance.initialize().then(() => {
-      this.checkAccount();
+    // Procesa el redirect de vuelta desde Microsoft en cualquier ruta
+    // (Authorization Code + PKCE).
+    this.msalService.handleRedirectObservable().subscribe({
+      next: (result: AuthenticationResult | null) => {
+        if (result && result.account) {
+          this.msalService.instance.setActiveAccount(result.account);
+          this.isAuthenticatedSubject.next(true);
+        }
+        this.checkAccount();
+      },
+      error: () => {
+        this.checkAccount();
+      }
     });
 
     this.msalBroadcast.msalSubject$
@@ -46,10 +58,25 @@ export class AuthService {
   }
 
   logoutRedirect(): void {
-    this.msalService.logoutRedirect();
+    this.msalService.logoutRedirect({
+      postLogoutRedirectUri: environment.azure.postLogoutRedirectUri
+    });
   }
 
   getUserName(): string | undefined {
     return this.msalService.instance.getActiveAccount()?.name;
+  }
+
+  getAccessToken(): Promise<string | null> {
+    const account = this.msalService.instance.getActiveAccount();
+    if (!account) return Promise.resolve(null);
+    return firstValueFrom(
+      this.msalService.acquireTokenSilent({
+        scopes: environment.azure.protectedResourceScopes,
+        account
+      })
+    )
+      .then((result) => result.accessToken)
+      .catch(() => null);
   }
 }
