@@ -1,59 +1,54 @@
-# MiAppMsal
+# AndesStay Frontend (Angular + MSAL)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.23.
+Frontend **Angular** del proyecto **AndesStay** (DSY1107 - Desarrollo Cloud Native I).
+Implementa el flujo de login con **Microsoft Entra ID** usando la librería **MSAL**
+(`@azure/msal-angular`), inyecta el **JWT** en las llamadas al backend mediante
+`MsalInterceptor` y protege las rutas con `MsalGuard`.
 
-## Development server
+## Características
 
-To start a local development server, run:
+- Login / logout con Entra ID (OIDC + PKCE) y lectura de **scopes (`scp`)** desde los claims del token.
+- **Catálogo** consumido desde el microservicio `ms-andesstay-catalog` vía **AWS API Gateway**.
+- **Reservas** con boleta (factura chilena, IVA 19%) persistidas en el microservicio
+  `ms-andesstay-reservations` (con fallback local).
+- **Reportes** y **Auditoría** de eventos (login, logout, reservas).
+- Notificaciones (campana + toasts) y rol del usuario obtenido del microservicio
+  `ms-andesstay-users`.
 
-```bash
-ng serve
+Rutas principales: `/login` (dashboard), `/catalog`, `/reservations`, `/booking/:id` (boleta),
+`/reports`, `/audit`.
+
+## Configuración del IDaaS
+
+```ts
+// src/environments/environment.ts
+clientId: 'e2d52786-8292-433e-a464-d575268eca38'
+tenantId: '5fb0afd3-b475-47e9-862b-1ce06143be35'
+protectedResourceScopes: ['api://e2d52786-8292-433e-a464-d575268eca38/read']
+apiBaseUrl: 'https://kid5q813hh.execute-api.us-east-1.amazonaws.com/api'
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+En el portal Entra la aplicación debe tener:
+- Redirect URI → `http://localhost:4200`
+- Application ID URI → `api://e2d52786-8292-433e-a464-d575268eca38`
+- Scope propio `read` (y `write` si se reserva)
+- Manifest: `requestedAccessTokenVersion: 2` (tokens v2)
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Desarrollo
 
 ```bash
-ng generate --help
+npm install
+ng serve          # http://localhost:4200
 ```
 
-## Building
-
-To build the project run:
+## Build de producción
 
 ```bash
-ng build
+ng build --configuration production
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Notas de presentación
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Para probar desde el celular se usa un túnel Cloudflare hacia el dev server (el redirect URI de
+  MSAL se calcula dinámicamente desde `window.location.origin`).
+- Credenciales del usuario demo del tenant: `andesstay@agustinfernandez.onmicrosoft.com`.
