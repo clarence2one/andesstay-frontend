@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReservationService } from '../../services/reservation';
 import { AuditService } from '../../services/audit';
@@ -10,12 +10,18 @@ import { AuditService } from '../../services/audit';
   templateUrl: './reports.html',
   styleUrl: './reports.scss',
 })
-export class Reports {
+export class Reports implements OnInit {
   reservationService = inject(ReservationService);
   auditService = inject(AuditService);
 
   reservations = this.reservationService.list();
   audit = this.auditService.list();
+
+  ngOnInit(): void {
+    this.reservationService.syncFromApi().then((ok) => {
+      if (ok) this.reservations = this.reservationService.list();
+    });
+  }
 
   totalReservas(): number {
     return this.reservations.length;

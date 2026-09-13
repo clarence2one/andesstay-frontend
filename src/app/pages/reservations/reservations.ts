@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ReservationService } from '../../services/reservation';
@@ -11,12 +11,18 @@ import { AuditService } from '../../services/audit';
   templateUrl: './reservations.html',
   styleUrl: './reservations.scss',
 })
-export class Reservations {
+export class Reservations implements OnInit {
   reservationService = inject(ReservationService);
   private auditService = inject(AuditService);
   private router = inject(Router);
 
   reservations = this.reservationService.list();
+
+  ngOnInit(): void {
+    this.reservationService.syncFromApi().then((ok) => {
+      if (ok) this.reservations = this.reservationService.list();
+    });
+  }
 
   formatCLP(amount: number): string {
     return '$' + amount.toLocaleString('es-CL') + ' CLP';
