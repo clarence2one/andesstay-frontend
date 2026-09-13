@@ -91,6 +91,19 @@
   white-space: nowrap;
 }
 
+.scope-pill { background: rgba(139, 92, 246, 0.3); color: #e9d5ff; }
+.role-pill {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #022c22;
+  background: linear-gradient(90deg, #34d399, #2dd4bf);
+  padding: 0.16rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 /* ---------- Campana de notificaciones ---------- */
 .bell-wrap { position: relative; }
 .bell {

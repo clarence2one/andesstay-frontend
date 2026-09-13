@@ -19,6 +19,8 @@
         <div class="auth-meta">
           <span class="user-name">{{ authService.getUserName() }}</span>
           <span *ngIf="tokenSnippet" class="jwt-pill" title="{{ tokenSnippet }}">JWT: {{ tokenSnippet }}</span>
+          <span *ngIf="scopesClaim" class="jwt-pill scope-pill" title="Scopes del claim scp">🔑 {{ scopesClaim }}</span>
+          <span *ngIf="userRole" class="role-pill" title="Rol asignado en el microservicio de usuarios">{{ userRole }}</span>
         </div>
       </div>
       <div class="bell-wrap">

@@ -1,9 +1,11 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Subscription, firstValueFrom } from 'rxjs';
 import { AuthService } from './services/auth';
 import { AuditService, AuditEvent } from './services/audit';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +18,11 @@ export class App implements OnInit, OnDestroy {
   title = 'AndesStay Platform';
   authService = inject(AuthService);
   private auditService = inject(AuditService);
+  private http = inject(HttpClient);
 
   tokenSnippet: string | null = null;
+  scopesClaim: string | null = null;
+  userRole: string | null = null;
   showNotifs = false;
   notifs: AuditEvent[] = [];
   toast: AuditEvent | null = null;
@@ -32,11 +37,15 @@ export class App implements OnInit, OnDestroy {
       if (isAuth) {
         this.authService.getAccessToken().then((token) => {
           this.tokenSnippet = token ? token.slice(0, 48) + '...' : null;
+          this.scopesClaim = token ? decodeScopes(token) : null;
         });
+        this.loadUserRole();
         this.reportLogin();
         this.auditLogin();
       } else {
         this.tokenSnippet = null;
+        this.scopesClaim = null;
+        this.userRole = null;
       }
     });
 
@@ -49,6 +58,20 @@ export class App implements OnInit, OnDestroy {
       if (this.toastTimer) clearTimeout(this.toastTimer);
       this.toastTimer = setTimeout(() => (this.toast = null), 4200);
     });
+  }
+
+  private async loadUserRole(): Promise<void> {
+    const profile = this.authService.getUserProfile();
+    const upn = profile?.email;
+    if (!upn) return;
+    try {
+      const user = await firstValueFrom(
+        this.http.get<{ role?: string }>(`${environment.apiBaseUrl}/users/${encodeURIComponent(upn)}`)
+      );
+      this.userRole = user.role ? user.role.replace('ROLE_', '') : null;
+    } catch {
+      this.userRole = null;
+    }
   }
 
   private reportLogin(): void {
@@ -112,4 +135,25 @@ export class App implements OnInit, OnDestroy {
   formatTime(iso: string): string {
     return new Date(iso).toLocaleString('es-CL', { dateStyle: 'short', timeStyle: 'short' });
   }
+}
+
+function decodeJwtPayload(token: string): Record<string, unknown> | null {
+  try {
+    const part = token.split('.')[1];
+    const base64 = part.replace(/-/g, '+').replace(/_/g, '/');
+    const json = decodeURIComponent(
+      atob(base64).split('').map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
+    );
+    return JSON.parse(json);
+  } catch {
+    return null;
+  }
+}
+
+function decodeScopes(token: string): string | null {
+  const claims = decodeJwtPayload(token);
+  const scp = claims?.['scp'];
+  if (Array.isArray(scp)) return scp.join(', ');
+  if (typeof scp === 'string') return scp;
+  return null;
 }
