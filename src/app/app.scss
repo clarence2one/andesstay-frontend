@@ -91,6 +91,103 @@
   white-space: nowrap;
 }
 
+/* ---------- Campana de notificaciones ---------- */
+.bell-wrap { position: relative; }
+.bell {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.bell:hover { background: rgba(255, 255, 255, 0.18); }
+.bell-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background: var(--as-rose);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notif-drop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 340px;
+  max-width: 90vw;
+  background: #0f2139;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  box-shadow: var(--as-shadow);
+  padding: 0.8rem;
+  z-index: 60;
+}
+.notif-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.notif-clear {
+  background: none;
+  border: none;
+  color: var(--as-teal);
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: inherit;
+}
+.notif-empty { color: var(--as-mist); font-size: 0.8rem; margin: 0.5rem 0; }
+.notif-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: #e2e8f0;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.notif-item time { margin-left: auto; color: #7d8ea6; font-size: 0.66rem; white-space: nowrap; }
+.notif-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.notif-dot.login { background: #34d399; }
+.notif-dot.logout { background: #f87171; }
+.notif-dot.reserva { background: #f59e0b; }
+.notif-dot.default { background: #60a5fa; }
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 200;
+  max-width: 360px;
+  background: rgba(15, 33, 57, 0.95);
+  border: 1px solid rgba(20, 184, 166, 0.45);
+  border-left: 4px solid var(--as-teal);
+  border-radius: 14px;
+  color: #e2e8f0;
+  padding: 0.8rem 1rem;
+  font-size: 0.85rem;
+  box-shadow: var(--as-shadow);
+  animation: toast-in 0.25s ease;
+}
+@keyframes toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
 .main {
   max-width: 1200px;
   margin: 0 auto;

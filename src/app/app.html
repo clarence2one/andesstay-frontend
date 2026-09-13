@@ -21,6 +21,21 @@
           <span *ngIf="tokenSnippet" class="jwt-pill" title="{{ tokenSnippet }}">JWT: {{ tokenSnippet }}</span>
         </div>
       </div>
+      <div class="bell-wrap">
+        <button class="bell" (click)="toggleNotifs()" aria-label="Notificaciones">🔔<span *ngIf="notifs.length" class="bell-badge">{{ notifs.length }}</span></button>
+        @if (showNotifs) {
+          <div class="notif-drop">
+            <div class="notif-head"><strong>Notificaciones</strong><button class="notif-clear" (click)="clearNotifs()">Borrar</button></div>
+            @if (notifs.length === 0) {
+              <p class="notif-empty">Sin eventos por ahora.</p>
+            } @else {
+              @for (n of notifs; track n.id) {
+                <div class="notif-item"><span class="notif-dot {{ n.type }}"></span>{{ n.message }}<time>{{ formatTime(n.time) }}</time></div>
+              }
+            }
+          </div>
+        }
+      </div>
       <button class="btn btn-ghost" (click)="copyToken()">📋 Copiar JWT</button>
       <button class="btn btn-danger" (click)="logout()">Cerrar sesión</button>
     </ng-container>
@@ -43,3 +58,7 @@
   </div>
   <p>AndesStay · Cloud Native FullStack · IDaaS + API Manager + Spring Boot + Angular · DSY1107</p>
 </footer>
+
+@if (toast) {
+  <div class="toast">🔔 {{ toast.message }}</div>
+}

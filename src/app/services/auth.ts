@@ -67,6 +67,14 @@ export class AuthService {
     return this.msalService.instance.getActiveAccount()?.name;
   }
 
+  getUserProfile(): { name?: string; email?: string } | null {
+    const account = this.msalService.instance.getActiveAccount();
+    if (!account) return null;
+    const claims = (account.idTokenClaims || {}) as Record<string, unknown>;
+    const email = (claims['email'] as string) || account.username || (claims['preferred_username'] as string);
+    return { name: account.name, email };
+  }
+
   getAccessToken(): Promise<string | null> {
     const account = this.msalService.instance.getActiveAccount();
     if (!account) return Promise.resolve(null);

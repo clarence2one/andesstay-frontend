@@ -1,1 +1,32 @@
-<p>audit works!</p>
+<section class="audit">
+  <div class="audit-head">
+    <h2 class="audit-title">🛡️ Auditoría</h2>
+    <p class="audit-sub">Registro de eventos de seguridad y actividad de la plataforma.</p>
+  </div>
+
+  @if (events.length === 0) {
+    <div class="audit-empty">
+      <div class="audit-empty-icon">📭</div>
+      <p>Sin eventos registrados todavía.</p>
+      <p class="audit-empty-sub">Los inicios de sesión, reservas y cierres de sesión quedarán registrados aquí.</p>
+    </div>
+  } @else {
+    <div class="audit-toolbar">
+      <span class="audit-count">{{ events.length }} evento(s)</span>
+      <button class="btn btn-danger audit-clear" (click)="clear()">🗑️ Borrar registro</button>
+    </div>
+
+    <div class="audit-list">
+      @for (e of events; track e.id) {
+        <div class="audit-row">
+          <span class="audit-type {{ e.type }}" [title]="typeLabel(e.type)">{{ typeLabel(e.type) }}</span>
+          <div class="audit-msg">
+            <span>{{ e.message }}</span>
+            <span class="audit-user" *ngIf="e.user">👤 {{ e.user }}</span>
+          </div>
+          <time class="audit-time">{{ formatTime(e.time) }}</time>
+        </div>
+      }
+    </div>
+  }
+</section>

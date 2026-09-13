@@ -64,6 +64,12 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": [
+              "somewhere-thesaurus-reduction-sellers.trycloudflare.com",
+              ".trycloudflare.com"
+            ]
+          },
           "configurations": {
             "production": {
               "buildTarget": "mi-app-msal:build:production"

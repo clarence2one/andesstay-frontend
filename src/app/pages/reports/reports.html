@@ -1,1 +1,54 @@
-<p>reports works!</p>
+<section class="reports">
+  <div class="rep-head">
+    <h2 class="rep-title">📊 Reportes</h2>
+    <p class="rep-sub">Estadísticas calculadas a partir de tus reservas y la actividad de la sesión.</p>
+  </div>
+
+  <div class="rep-stats">
+    <div class="rep-stat"><span class="rep-icon">🗓️</span><span class="rep-num">{{ totalReservas() }}</span><span class="rep-label">Reservas</span></div>
+    <div class="rep-stat"><span class="rep-icon">🛏️</span><span class="rep-num">{{ totalNoches() }}</span><span class="rep-label">Noches</span></div>
+    <div class="rep-stat"><span class="rep-icon">💰</span><span class="rep-num">{{ formatCLP(totalIngresos()) }}</span><span class="rep-label">Ingresos</span></div>
+    <div class="rep-stat"><span class="rep-icon">📈</span><span class="rep-num">{{ formatCLP(promedioNoche()) }}</span><span class="rep-label">Ticket medio</span></div>
+    <div class="rep-stat"><span class="rep-icon">🔐</span><span class="rep-num">{{ loginCount() }}</span><span class="rep-label">Inicios de sesión</span></div>
+  </div>
+
+  <div class="rep-cols">
+    <div class="rep-card">
+      <h3 class="rep-card-title">Alojamientos más reservados</h3>
+      @if (topLodgings().length > 0) {
+        <div class="bars">
+          @for (t of topLodgings(); track t.title) {
+            <div class="bar-row">
+              <span class="bar-label">{{ t.title }}</span>
+              <div class="bar-track"><div class="bar-fill" [style.width.%]="(t.count / maxCount()) * 100">{{ t.count }}</div></div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="rep-empty">Aún no hay reservas para mostrar. Reserva un alojamiento en el catálogo.</p>
+      }
+    </div>
+
+    <div class="rep-card">
+      <h3 class="rep-card-title">Detalle de reservas</h3>
+      @if (reservations.length > 0) {
+        <table class="rep-table">
+          <thead><tr><th>Folio</th><th>Alojamiento</th><th>Noches</th><th class="align-right">Total</th><th>Fecha</th></tr></thead>
+          <tbody>
+            @for (r of reservations; track r.id) {
+              <tr>
+                <td class="folio">{{ r.folio }}</td>
+                <td>{{ r.title }}</td>
+                <td>{{ r.nights }}</td>
+                <td class="align-right">{{ formatCLP(r.total) }}</td>
+                <td>{{ formatDate(r.createdAt) }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <p class="rep-empty">Sin reservas registradas.</p>
+      }
+    </div>
+  </div>
+</section>

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth';
 import { ReservationService } from '../../services/reservation';
+import { AuditService } from '../../services/audit';
 
 interface Lodging {
   id: number;
@@ -29,6 +30,7 @@ export class Catalog implements OnInit {
   private http = inject(HttpClient);
   authService = inject(AuthService);
   private reservationService = inject(ReservationService);
+  private auditService = inject(AuditService);
   private router = inject(Router);
 
   lodgings: Lodging[] = [];
@@ -96,6 +98,7 @@ export class Catalog implements OnInit {
       guestName: this.guestName.trim() || 'Invitado'
     });
     this.closeModal();
+    this.auditService.log('reserva', `Reserva ${reservation.folio} · ${reservation.title} · ${reservation.nights} noche(s) · ${this.formatCLP(reservation.total)}`, reservation.guestName);
     this.router.navigate(['/booking', reservation.id]);
   }
 }
